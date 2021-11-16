@@ -1,0 +1,25 @@
+{
+  "name": "projectapp",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlaklein/klein-323-project2.git"
+  },
+  "author": "Carla Klein",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlaklein/klein-323-project2/issues"
+  },
+  "homepage": "https://github.com/carlaklein/klein-323-project2#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  }
+}
