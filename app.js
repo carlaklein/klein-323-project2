@@ -10,6 +10,7 @@ var params = require("./params/params");
 
 var setUpPassport = require("./setuppassport");
 var routes = require("./routes");
+var postes = require("./models/post");
 
 var app = express();
 mongoose.connect(params.DATABASECONNECTION);
@@ -21,7 +22,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use(session({
-    secret:"hdhnbcdtrwiol,k543778373kjgh",
+    secret:"noodle",
     resave:false,
     saveUninitialized:false
 }));

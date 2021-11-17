@@ -19,7 +19,7 @@ userSchema.pre("save", function(done){
 
     bcrypt.genSalt(SALT_FACTOR, function(err,salt){
         if(err){return done(err);}
-        bcrypt.hash(user.password, salt, function(err, hashedPaassword){
+        bcrypt.hash(user.password, salt, function(err, hashedPassword){
             if(err) {return done(err);}
 
             user.password = hashedPassword;
