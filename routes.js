@@ -1,12 +1,27 @@
 var express = require("express");
 var passport = require("passport");
 
+var multer = require("multer");
+var crypto = require("crypto");
+var path = require("path");
+
 var ensureAuthenticated = require("./auth/auth").ensureAuthenticated;
 
 var User = require("./models/user");
 var Post = require("./models/post");
 
 var router = express.Router();
+
+var storage = multer.diskStorage({
+    destination: './uploads/images/',
+    filename: function(req, file, cb){
+        crypto.pseudoRandomBytes(16, function(err, raw){
+            cb(null, raw.toString('hex') + Date.now() + path.extname(file.originalname));
+        });
+    }
+});
+
+var upload = multer({storage:storage});
 
 router.use(function(req,res, next){
     res.locals.currentUser = req.user;
@@ -24,8 +39,9 @@ router.get("/posts/add", ensureAuthenticated, function(req, res){
     res.render("addpost");
 });
 
-router.post("/posts/add", ensureAuthenticated, function(req, res){
+router.post("/posts/add", upload.single('image'), ensureAuthenticated, function(req, res){
     var newPost = new Post({
+        image: req.file.path,
         photo_caption:req.body.photo_caption,
         geolocation:req.body.geolocation,
         tags:req.body.tags,
@@ -50,6 +66,36 @@ router.get("/posts", ensureAuthenticated, function(req,res){
 
         res.render("posts", {posts:posts})
     });
+});
+
+router.get("/posts/read/:postId", function(req, res){
+    Post.findById(req.params.postId).exec(function(err, post){
+        res.render("detailpost",{post:post});
+    });
+});
+
+router.get("/posts/edit/:postId", function(req, res){
+    Post.findById(req.params.postId).exec(function(err, post){
+        res.render("editpost",{post:post});
+    });
+});
+
+router.post("/posts/update", async function(req, res){
+    const post = await Post.findById(req.body.postId);
+
+    post.photo_caption = req.body.photo_caption;
+    post.geolocation = req.body.geolocation;
+    post.tags = req.body.tags;
+    post.captured_by = req.body.captured_by;
+
+    try {
+        let savePost = awaitpost.save();
+        console.log("savepost", savePost);
+        res.redirect("/posts/" + req.body.postId);
+    } catch (err) {
+        console.log("An error occured. Please try again.");
+        res.status(see).send(err);
+    }
 });
 
 router.get("/login", function(req,res){

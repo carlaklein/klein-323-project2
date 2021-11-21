@@ -1,0 +1,43 @@
+<%- include('_partial/_header'); -%>
+
+<div class="row">
+    <div class="col-md-6">
+        <h1>Edit Post: <%= post.photo_caption %></h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form action="/posts/update" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="inputCaption">Caption</label>
+                <input type="text" class="form-control" placeholder="Caption" id="inputCaption" name="photo_caption" value="<% post.photo_caption %>"/>
+            </div>
+
+            <div class="form-group">
+                <label for="inputGeo">Geolocation</label>
+                <input class="form-control" id="inputGeo" placeholder="eg. Place" name="geolocation" value="<% post.geolocation %>"/>
+            </div>
+
+            <div class="form-group">
+                <label for="inputTags">Tags</label>
+                <input class="form-control" id="inputTags" placeholder="Tags" name="tags" value="<% post.tags %>"/>
+            </div>
+
+            <div class="form-group">
+                <label for="input_captured_by">Captured By</label>
+                <input class="form-control" id="input_captured_by" placeholder="eg. Name" name="captured_by" value="<% post.captured_by %>"/>
+            </div>
+
+            <input type="hidden" id="postId" name="postId" value="<%= post._id %>"/>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-default" href="#" role="button">Update</button>
+            </div>
+    </div>
+
+    </form>
+</div>
+
+
+<%- include ('_partial/_footer'); -%>

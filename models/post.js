@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var postSchema = mongoose.Schema({
-    image: {type:mongoose.Schema.Types.ObjectId, required:false, unique:false},
+    image: {type:String, required:true, unique:false},
     photo_caption: {type: String, required:true},
     geolocation: {type:String, required: true},
     tags: {type:String, required: true},
